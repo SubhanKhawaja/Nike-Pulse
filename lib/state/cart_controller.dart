@@ -55,13 +55,18 @@ class CartController extends ChangeNotifier {
     if (newQuantity <= 0) {
       removeItem(item);
     } else {
-      item.quantity = newQuantity;
+      final index = _items.indexWhere((i) => i.uniqueKey == item.uniqueKey);
+      if (index >= 0) {
+        _items[index].quantity = newQuantity;
+      } else {
+        item.quantity = newQuantity;
+      }
       notifyListeners();
     }
   }
 
   void removeItem(CartItem item) {
-    _items.remove(item);
+    _items.removeWhere((i) => i.uniqueKey == item.uniqueKey);
     notifyListeners();
   }
 

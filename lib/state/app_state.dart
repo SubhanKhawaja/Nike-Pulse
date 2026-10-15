@@ -10,6 +10,24 @@ class AppState extends ChangeNotifier {
   String _selectedCategory = 'All';
   String _searchQuery = '';
 
+  AppState() {
+    cartController.addListener(_onSubControllerNotification);
+    themeController.addListener(_onSubControllerNotification);
+  }
+
+  void _onSubControllerNotification() {
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    cartController.removeListener(_onSubControllerNotification);
+    themeController.removeListener(_onSubControllerNotification);
+    cartController.dispose();
+    themeController.dispose();
+    super.dispose();
+  }
+
   Set<String> get favoriteProductIds => Set.unmodifiable(_favoriteProductIds);
   String get selectedCategory => _selectedCategory;
   String get searchQuery => _searchQuery;

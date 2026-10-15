@@ -91,7 +91,7 @@ class _AppliedPromoBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: AppColors.success.withAlpha(25),
         borderRadius: BorderRadius.circular(12),
@@ -102,7 +102,7 @@ class _AppliedPromoBadge extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 18),
+              const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 20),
               const SizedBox(width: 8),
               Text(
                 'Code $code Applied (20% Off)',
@@ -110,10 +110,19 @@ class _AppliedPromoBadge extends StatelessWidget {
               ),
             ],
           ),
-          IconButton(
-            icon: const Icon(Icons.close_rounded, size: 18),
-            onPressed: onRemove,
-            visualDensity: VisualDensity.compact,
+          Tooltip(
+            message: 'Remove promo code',
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: onRemove,
+                child: const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Icon(Icons.close_rounded, size: 20),
+                ),
+              ),
+            ),
           ),
         ],
       ),

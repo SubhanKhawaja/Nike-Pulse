@@ -125,25 +125,57 @@ class _ItemQuantityControls extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(
-            icon: const Icon(Icons.remove, size: 16),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            onPressed: () =>
-                appState.cartController.updateQuantity(item, item.quantity - 1),
+          _QuantityActionButton(
+            icon: Icons.remove,
+            tooltip: 'Decrease quantity',
+            onTap: () => appState.cartController.updateQuantity(item, item.quantity - 1),
           ),
-          Text(
-            '${item.quantity}',
-            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Text(
+              '${item.quantity}',
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+            ),
           ),
-          IconButton(
-            icon: const Icon(Icons.add, size: 16),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            onPressed: () =>
-                appState.cartController.updateQuantity(item, item.quantity + 1),
+          _QuantityActionButton(
+            icon: Icons.add,
+            tooltip: 'Increase quantity',
+            onTap: () => appState.cartController.updateQuantity(item, item.quantity + 1),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _QuantityActionButton extends StatelessWidget {
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onTap;
+
+  const _QuantityActionButton({
+    required this.icon,
+    required this.tooltip,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: SizedBox(
+            width: 34,
+            height: 34,
+            child: Center(
+              child: Icon(icon, size: 16),
+            ),
+          ),
+        ),
       ),
     );
   }

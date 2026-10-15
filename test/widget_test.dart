@@ -41,6 +41,31 @@ void main() {
       expect(cart.promoDiscountPercent, 0.20);
       expect(cart.discountAmount, closeTo(product.price * 0.20, 0.01));
 
+      // Test quantity increment
+      cart.addToCart(product, 'US 9', product.availableColors.first, quantity: 1);
+      final item = cart.items.first;
+      cart.updateQuantity(item, 3);
+      expect(cart.items.first.quantity, 3);
+      expect(cart.subtotal, closeTo(product.price * 3, 0.01));
+
+      // Test quantity decrement
+      cart.updateQuantity(item, 2);
+      expect(cart.items.first.quantity, 2);
+
+      // Test quantity decrement to 0 removes item
+      cart.updateQuantity(item, 0);
+      expect(cart.items.isEmpty, true);
+
+      // Test promo code removal
+      cart.addToCart(product, 'US 9', product.availableColors.first, quantity: 1);
+      cart.applyPromoCode('NIKE20');
+      expect(cart.appliedPromoCode, 'NIKE20');
+      expect(cart.promoDiscountPercent, 0.20);
+      cart.removePromoCode();
+      expect(cart.appliedPromoCode, null);
+      expect(cart.promoDiscountPercent, 0.0);
+      expect(cart.discountAmount, 0.0);
+
       // Clear cart
       cart.clearCart();
       expect(cart.itemCount, 0);

@@ -78,7 +78,7 @@ class _MobileCartView extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 12),
       children: [
-        ...cart.items.map((item) => CartItemTile(item: item)),
+        ...cart.items.map((item) => CartItemTile(key: ValueKey(item.uniqueKey), item: item)),
         const SizedBox(height: 12),
         const PromoCodeInput(),
         const SizedBox(height: 8),
@@ -106,7 +106,7 @@ class _WideCartView extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 12),
             children: [
-              ...cart.items.map((item) => CartItemTile(item: item)),
+              ...cart.items.map((item) => CartItemTile(key: ValueKey(item.uniqueKey), item: item)),
               const PromoCodeInput(),
             ],
           ),
